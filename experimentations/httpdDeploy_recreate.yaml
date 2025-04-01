@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: httpd-deploy-yaml
+  name: httpd-deploy-yaml
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: httpd-deploy-yaml
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: httpd-deploy-yaml
+    spec:
+      containers:
+      - image: httpd:alpine3.18
+        name: httpd

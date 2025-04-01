@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: httpd-deploy-yaml
+  name: httpd-deploy-yaml
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: httpd-deploy-yaml
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: httpd-deploy-yaml
+    spec:
+      containers:
+      - image: httpd:alpine3.19
+        name: httpd
+        command: ["/bin/bash", "-c"] # override the default command
+        args: ["sleep 5; exit 1"] # sleep for 5 seconds the exit wiht an error
