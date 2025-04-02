@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deploy-yaml
+  name: nginx-deploy-yaml
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx-deploy-yaml
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-yaml
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+          - containerPort: 80
